@@ -28,7 +28,8 @@ typedef struct
   pix2 data[IMG_SIZE]; // 2 pixels per byte so /2
 } frame;
 
-typedef enum {
+typedef enum
+{
     BLACK          = 0x1,
     BLUE           = 0x2,
     GREEN          = 0x3,
@@ -66,6 +67,11 @@ static inline void clear_frame(frame *f, uint8_t value)
 {
     uint8_t both_pixels = (value << 4) | value;  // set both pixels in pix2
     memset(f->data, both_pixels, sizeof(f->data));
+}
+
+void uart_send_bin(UART_HandleTypeDef *huart3, uint8_t *buff, unsigned int len)
+{
+  HAL_UART_Transmit(huart3, (uint8_t *)buff, len, 1000);
 }
 
 #endif /* INC_MONITOR_H_ */
